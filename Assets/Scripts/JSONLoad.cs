@@ -4,51 +4,6 @@ using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
 
-[System.Serializable]
-public class Coordinate
-{
-	public float x;
-	public float y;
-
-	public int origin;
-	public string randomized;
-}
-
-[System.Serializable]
-public class HyperLane
-{
-	public int to;
-	public int length;
-}
-
-[System.Serializable]
-public class GalacticObject
-{
-	public Coordinate coordinate;
-	public string type;
-	public string name;
-	public HyperLane[] hyperlane;
-}
-
-[System.Serializable]
-public class GameState
-{
-	public GalacticObject[] galactic_object;
-}
-
-[System.Serializable]
-public class SimpleTest
-{
-	public object meta;
-	public GameState gamestate;
-}
-
-[System.Serializable]
-public class JSONParent
-{
-	public SimpleTest test;
-}
-
 public class JSONLoad : MonoBehaviour
 {
 	[Header( "Variables" )]
@@ -67,17 +22,14 @@ public class JSONLoad : MonoBehaviour
 		//Read the text from directly from the test.txt file
 		StreamReader reader = new StreamReader(path);
 		string jsonObj = reader.ReadToEnd();
-		Debug.Log( jsonObj );
 		reader.Close();
 
-		//SimpleTest glyphMap = JsonUtility.FromJson<SimpleTest>(jsonObj);
 		dynamic test = JsonConvert.DeserializeObject( jsonObj );
 
 		// First pass to get all systems with positions
 		int system = 0;
 		while ( test.gamestate.galactic_object[system.ToString()] != null )
 		{
-			//print( system + " " + test.gamestate.galactic_object[system.ToString()].coordinate.x + " " + test.gamestate.galactic_object[system.ToString()].coordinate.y );
 			float x = test.gamestate.galactic_object[system.ToString()].coordinate.x;
 			float y = test.gamestate.galactic_object[system.ToString()].coordinate.y;
 			GameObject obj = Instantiate( SystemPrefab, transform );
