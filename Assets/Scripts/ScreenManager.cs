@@ -11,21 +11,21 @@ public class ScreenManager : MonoBehaviour
 		// Find all ScreenSegments
 		Segments.AddRange( GetComponentsInChildren<ScreenSegment>() );
 
-		StartCoroutine( IEnumUpdate() );
+		//StartCoroutine( IEnumUpdate() );
 	}
 
-	IEnumerator IEnumUpdate()
-	{
-		while ( true )
-		{
-			// Cycle through constantly to next highest priority screen
-			Segments.Sort( ( x, y ) => x.CurrentPriority.CompareTo( y.CurrentPriority ) );
+	//IEnumerator IEnumUpdate()
+	//{
+	//	while ( true )
+	//	{
+	//		// Cycle through constantly to next highest priority screen
+	//		Segments.Sort( ( x, y ) => x.CurrentPriority.CompareTo( y.CurrentPriority ) );
 
-			Debug.Log( "Update; " + Segments[Segments.Count-1].name );
-			yield return StartCoroutine( Segments[Segments.Count-1].UpdateTexture() );
+	//		Debug.Log( "Update; " + Segments[Segments.Count-1].name );
+	//		//yield return StartCoroutine( Segments[Segments.Count-1].UpdateTexture() );
 
-			// Safety while testing
-			yield return new WaitForSeconds( 2 );
-		}
-	}
+	//		// Safety while testing
+	//		yield return new WaitForSeconds( 2 );
+	//	}
+	//}
 }

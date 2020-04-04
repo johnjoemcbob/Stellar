@@ -9,8 +9,8 @@ public class VRInputModule : BaseInputModule
 	public static VRInputModule Instance;
 
 	public Camera Camera;
-	public SteamVR_Input_Sources TargetSource;
-	public SteamVR_Action_Boolean ClickAction;
+	//public SteamVR_Input_Sources TargetSource;
+	//public SteamVR_Action_Boolean ClickAction;
 
 	private GameObject CurrentObject = null;
 	private PointerEventData Data = null;
@@ -44,16 +44,16 @@ public class VRInputModule : BaseInputModule
 		HandlePointerExitAndEnter( Data, CurrentObject );
 
 		// Press
-		if ( input.GetMouseButtonDown( 0 ) || ClickAction.GetStateDown( TargetSource ) )
+		if ( input.GetMouseButtonDown( 0 ) )
 		{
 			ProcessPress( Data );
 		}
 
 		// Release
-		if ( ClickAction.GetStateUp( TargetSource ) )
-		{
-			ProcessRelease( Data );
-		}
+		//if ( ClickAction.GetStateUp( TargetSource ) )
+		//{
+		//	ProcessRelease( Data );
+		//}
 	}
 
 	public PointerEventData GetData()

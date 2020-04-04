@@ -5,16 +5,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;#SingleInstance force
 #MaxThreadsPerHotkey 2
 
-WinActivate, Stellaris ahk_class SDL_app
-Send {Esc}
-Sleep, 100
-Send {F1}
-Sleep, 100
-Send {F1}
-Sleep, 100
-Send {%1%}
-Sleep, 300
-Send {%1%}
+ControlSend,, {%1%}, Stellaris
 
 return
 ExitApp

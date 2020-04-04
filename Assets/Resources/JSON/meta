@@ -1,0 +1,34 @@
+version="Shelley v2.5.1"
+version_control_revision=51819
+name="The Sequence 2"
+date="2200.01.01"
+required_dlcs={
+	"Ancient Relics Story Pack"
+	"Anniversary Portraits"
+	"Apocalypse"
+	"Distant Stars Story Pack"
+	"Horizon Signal"
+	"Leviathans Story Pack"
+	"Megacorp"
+	"Synthetic Dawn Story Pack"
+	"Utopia"
+}
+player_portrait="sd_mam_robot"
+flag={
+	icon={
+		category="domination"
+		file="domination_18.dds"
+	}
+	background={
+		category="backgrounds"
+		file="v.dds"
+	}
+	colors={
+		"red"
+		"black"
+		"null"
+		"null"
+	}
+}
+meta_fleets=3.000
+meta_planets=1

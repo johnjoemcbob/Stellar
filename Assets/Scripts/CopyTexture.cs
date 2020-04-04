@@ -5,23 +5,34 @@ using UnityEngine.UI;
 
 public class CopyTexture : MonoBehaviour
 {
-	public RawImage Source;
-
+	protected RawImage Source;
 	protected RawImage Target;
-	protected Texture Texture;
+	protected Texture LockOverwrite;
 
 	void Awake()
 	{
+		Source = FindObjectOfType<Webcam>().GetComponent<RawImage>();
+
 		Target = GetComponent<RawImage>();
 	}
 
-	void Update()
+	private void Update()
 	{
-		if ( Texture == null )
+		Target.texture = ( LockOverwrite!= null ) ? LockOverwrite : Source.texture;
+	}
+
+	// TODO this isn't implemented properly
+	public void LockFrame()
+	{
+		if ( LockOverwrite == null )
 		{
-			Texture = new Texture2D( Source.texture.width, Source.texture.height, TextureFormat.ARGB32, false );
+			LockOverwrite = new Texture2D( Source.texture.width, Source.texture.height, TextureFormat.ARGB32, false );
 		}
-		Graphics.CopyTexture( Source.texture, Texture );
-		Target.texture = Texture;
+		Graphics.CopyTexture( Source.texture, LockOverwrite );
+	}
+
+	public void UnlockFrame()
+	{
+		LockOverwrite = null;
 	}
 }

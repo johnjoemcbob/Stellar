@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.stellaris.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\Matthew\\Documents\\Stellaris\\actions.json",
+      "action_manifest_path": "E:\\Projects\\Stellar\\actions.json",
       "strings": {
         "en_us": {
           "name": "Stellaris [Testing]"

@@ -10,7 +10,8 @@ public class ScreenSegment : MonoBehaviour
 	public Vector2 Max;
 	public float Scale = 1;
 	public float UpdateFrequency = 0;
-	public float WaitTime = 0.8f;
+	public float WaitTimeBefore = 0.8f;
+	public float WaitTimeAfter = 0.01f;
 	public string Key = "";
 	public string OverrideScript = "";
 
@@ -29,6 +30,8 @@ public class ScreenSegment : MonoBehaviour
 		Copy.enabled = true;
 
 		//StartCoroutine( UpdateTexture() );
+
+		UpdateTriggerSize();
 	}
 
 	void Update()
@@ -53,31 +56,53 @@ public class ScreenSegment : MonoBehaviour
 		CurrentPriority += Time.deltaTime;// / UpdateFrequency;
 	}
 
-	//IEnumerator UpdateTexture()
-	//{
-	//	while ( true )
-	//	{
-	//		yield return new WaitForSeconds( UpdateFrequency );
-
-	//		// Update
-	//		Copy.enabled = true;
-	//		PressAHKKey();
-	//		yield return new WaitForSeconds( 0.07f ); // Wait for correct texture
-	//		Copy.enabled = false;
-	//	}
-	//}
-
-	public IEnumerator UpdateTexture()
+	IEnumerator UpdateTexture()
 	{
+		while ( true )
 		{
-			float wait = PressAHKKey();
-			yield return new WaitForSeconds( wait ); // Wait for correct input
+			yield return new WaitForSeconds( UpdateFrequency );
+
+			// Update
+			yield return new WaitForSeconds( WaitTimeBefore ); // Wait for correct input
 			Copy.enabled = true;
-			yield return new WaitForSeconds( 0.01f ); // Wait while captures
+			PressAHKKey();
+			yield return new WaitForEndOfFrame();
+			yield return new WaitForEndOfFrame();
+			yield return new WaitForEndOfFrame();
+			yield return new WaitForEndOfFrame();
 			Copy.enabled = false;
 		}
+	}
 
-		CurrentPriority = 0;
+	//public IEnumerator UpdateTexture()
+	//{
+	//	{
+	//		float wait = PressAHKKey();
+	//		yield return new WaitForSeconds( wait ); // Wait for correct input
+	//		Copy.enabled = true;
+	//		yield return new WaitForSeconds( 0.01f ); // Wait while captures
+	//		Copy.enabled = false;
+	//	}
+
+	//	CurrentPriority = 0;
+	//}
+
+	public void UpdateTriggerSize()
+	{
+		// Create Trigger Collider
+		if ( gameObject.GetComponent<BoxCollider>() == null )
+		{
+			gameObject.AddComponent<BoxCollider>();
+		}
+		var recttrans = GetComponent<RectTransform>();
+		int dir = 1;
+		foreach ( var collider in GetComponentsInChildren<BoxCollider>() )
+		{
+			collider.isTrigger = true;
+			collider.size = new Vector3( recttrans.sizeDelta.x, recttrans.sizeDelta.y, collider.size.z );
+			collider.center = new Vector3( dir * collider.size.x / 2, -collider.size.y / 2, 0 );
+			dir = -1;
+		}
 	}
 
 	public float PressAHKKey()
@@ -93,6 +118,6 @@ public class ScreenSegment : MonoBehaviour
 		}
 		System.Diagnostics.Process.Start( startInfo );
 
-		return WaitTime;
+		return WaitTimeBefore;
 	}
 }
